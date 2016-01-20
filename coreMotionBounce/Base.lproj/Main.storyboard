@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MRI-VB-vvX">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--BLOW UP!-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="coreMotionBounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3R-v9-ViA" customClass="BouncingViewController" customModule="coreMotionBounce" customModuleProvider="target">
+                                <rect key="frame" x="20" y="64" width="560" height="498"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RzV-Fy-583">
+                                <rect key="frame" x="20" y="562" width="560" height="38"/>
+                                <color key="backgroundColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Play 🎯">
+                                    <color key="titleColor" red="0.4283361007" green="0.4297149737" blue="0.89898989900000004" alpha="0.81999999999999995" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="playBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1GF-G3-wAi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="RzV-Fy-583" secondAttribute="trailing" id="2Ir-ii-CM7"/>
+                            <constraint firstItem="RzV-Fy-583" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Gyu-OD-V9H"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Q3R-v9-ViA" secondAttribute="trailing" id="Yfb-M5-o6b"/>
+                            <constraint firstItem="Q3R-v9-ViA" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="h1S-Oo-j2A"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RzV-Fy-583" secondAttribute="bottom" id="k4u-PB-J4a"/>
+                            <constraint firstItem="Q3R-v9-ViA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="o9j-KJ-gUY"/>
+                            <constraint firstItem="RzV-Fy-583" firstAttribute="top" secondItem="Q3R-v9-ViA" secondAttribute="bottom" id="w3B-dM-OUv"/>
+                            <constraint firstItem="Q3R-v9-ViA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="wIj-QH-CQ1"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="wIj-QH-CQ1"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="BLOW UP!" id="UtO-xX-GJB"/>
+                    <connections>
+                        <outlet property="bounceView" destination="Q3R-v9-ViA" id="sIe-bE-1OF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1322" y="189"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gba-8G-fg4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MRI-VB-vvX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="21y-fM-Vhn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="AgG-pN-wBJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZiV-D7-um9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-135" y="36"/>
+        </scene>
+    </scenes>
+</document>
