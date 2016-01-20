@@ -24,9 +24,15 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
             //            viewWithTag.removeFromSuperview()
             viewWithTag.hidden = false
         }else{
-            let txtField: UILabel = UILabel(frame: CGRectMake(0, 0, 150.00, 300.00));
+            let txtField: UILabel = UILabel(frame: CGRectMake(0, 0, self.frame.maxX-15, self.frame.maxY-10));
             txtField.text = "Game Over"
-            txtField.backgroundColor = UIColor.whiteColor()
+            txtField.textColor = UIColor.whiteColor()
+            txtField.backgroundColor = UIColor.redColor()
+           
+//            txtField.font = UIFont(name: "System", size: 40)
+            txtField.font = UIFont(name: "System", size: 40.0)
+//            txtField.alignmentRectInsets()
+            txtField.textAlignment = NSTextAlignment.Center
             txtField.tag = 135
             self.addSubview(txtField)
         }
@@ -55,10 +61,22 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
         return block
     }
     
+    func resetView(){
+    
+        count = 0
+        removeLabel()
+        
+        if redBlock != nil {
+            redBlock!.frame = CGRectMake(0 , 0, 40, 40)
+            redBlock!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
+            redBlock!.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        }
+    }
+    
     func activateMotion(){
         if redBlock == nil {
             redBlock = addBlock()
-            redBlock?.backgroundColor = UIColor.redColor()
+            redBlock?.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
             bouncer.addBlock(redBlock!)
         }
         let motionManager = AppDelegate.Motion.Manager
@@ -72,18 +90,6 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
 
     }
     
-//
-//    func playSound(soundName: String)
-//    {
-//        let coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ding", ofType: "mp3")!)
-//        do{
-//            let audioPlayer = try AVAudioPlayer(contentsOfURL:coinSound)
-//            audioPlayer.prepareToPlay()
-//            audioPlayer.play()
-//        }catch {
-//            print("Error getting the audio file")
-//        }
-//    }
 
     func playSound(){
         AudioServicesPlaySystemSound(1051)
@@ -94,12 +100,14 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
         if count < 18 {
             playSound()
             count++
-            if redBlock?.backgroundColor == UIColor.redColor(){
-                redBlock?.backgroundColor = UIColor.greenColor()
-            }else{
-                redBlock?.backgroundColor = UIColor.redColor()
-            }
+//            if redBlock?.backgroundColor == UIColor.redColor(){
+//                redBlock?.backgroundColor = UIColor.greenColor()
+//            }else{
+//                redBlock?.backgroundColor = UIColor.redColor()
+//            }
+            redBlock?.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05 * CGFloat(count))
            redBlock?.frame = CGRectMake((redBlock?.frame.minX)!, (redBlock?.frame.minY)!, (redBlock?.frame.width)! * 1.2, (redBlock?.frame.height)! * 1.2)
+            
         }else {
             redBlock!.frame = CGRectMake(0, 0, 0, 0)
             addLabel()

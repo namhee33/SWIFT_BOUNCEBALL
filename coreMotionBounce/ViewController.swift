@@ -13,16 +13,10 @@ class ViewController: UIViewController{
     @IBOutlet weak var bounceView: BouncingViewController!
     
     @IBAction func playBtnPressed(sender: AnyObject) {
-        bounceView.count = 0
-        bounceView.removeLabel()
         
-        if bounceView.redBlock != nil {
-            bounceView.redBlock!.frame = CGRectMake(0 , 0, 40, 40)
-            bounceView.redBlock!.backgroundColor = UIColor.redColor()
-        }
-       
-        
+        bounceView.resetView()
         bounceView.activateMotion()
+        
     }
     
     override func viewDidLoad(){
