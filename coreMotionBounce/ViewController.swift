@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController{
+class ViewController: UIViewController, CancelProtocol, DoneProtocol{
     
     @IBOutlet weak var bounceView: BouncingViewController!
+    var gameLevel = 1
     
     @IBAction func playBtnPressed(sender: AnyObject) {
-        
+        bounceView.gameLevel = gameLevel
         bounceView.resetView()
         bounceView.activateMotion()
         
@@ -33,6 +34,23 @@ class ViewController: UIViewController{
         super.viewWillDisappear(animated)
         AppDelegate.Motion.Manager.stopAccelerometerUpdates()
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let navigationController = segue.destinationViewController as! UINavigationController
+        let controller = navigationController.topViewController as! SettingViewController
+        controller.CancelDelegate = self
+        controller.DoneDelegate = self
    
+    }
+    
+    func cancelSetting(){
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func settingInfo(level: Int) {
+        gameLevel = level
+        print("gameLevel: ", level)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 

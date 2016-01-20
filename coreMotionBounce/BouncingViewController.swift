@@ -16,7 +16,9 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     lazy var animator: UIDynamicAnimator = {UIDynamicAnimator(referenceView: self)}()
     var redBlock: UIView?
     var audioPlayer = AVAudioPlayer()
-    
+    var gameLevel = 1
+    var barrier: UIView?
+    var block: UIView?
     
     
     func addLabel(){
@@ -26,8 +28,15 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
         }else{
             let txtField: UILabel = UILabel(frame: CGRectMake(0, 0, self.frame.maxX-15, self.frame.maxY-10));
             txtField.text = "Game Over"
-            txtField.textColor = UIColor.whiteColor()
-            txtField.backgroundColor = UIColor.redColor()
+            
+            if gameLevel == 1 {
+                txtField.textColor = UIColor.whiteColor()
+                txtField.backgroundColor = UIColor.redColor()
+            }else{
+                print("gameLevel 2. transparent background color")
+                txtField.textColor = UIColor.redColor()
+                txtField.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            }
            
 //            txtField.font = UIFont(name: "System", size: 40)
             txtField.font = UIFont(name: "System", size: 40.0)
@@ -50,16 +59,34 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     }
     
     func addBlock() -> UIView {
-        let block = UIView(frame: CGRect(origin:  CGPoint.zero, size: Constants.BlockSize))
-        block.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        block = UIView(frame: CGRect(origin:  CGPoint.zero, size: Constants.BlockSize))
+        block!.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
         
-        self.addSubview(block)
-        collision = UICollisionBehavior(items: [block])
+        self.addSubview(block!)
+        collision = UICollisionBehavior(items: [block!])
         collision.collisionDelegate = self
         collision.translatesReferenceBoundsIntoBoundary = true
         animator.addBehavior(collision)
-        return block
+        return block!
     }
+    
+    func addBarrior() -> UIView{
+        
+        print("add one more barrier")
+        if barrier == nil {
+            barrier = UIView(frame: CGRect(x: 0, y: 300, width: 130, height: 20))
+            barrier!.backgroundColor = UIColor.grayColor()
+            self.addSubview(barrier!)
+        }
+        animator.removeBehavior(collision)
+        collision = UICollisionBehavior(items: [block!])
+        collision.addBoundaryWithIdentifier("barrier", forPath: UIBezierPath(rect: barrier!.frame))
+        collision.collisionDelegate = self
+        collision.translatesReferenceBoundsIntoBoundary = true
+        animator.addBehavior(collision)
+        return barrier!
+    }
+    
     
     func resetView(){
     
@@ -71,14 +98,24 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
             redBlock!.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
             redBlock!.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
         }
+        
+        if barrier != nil {
+            barrier!.frame = CGRectMake(0 , 300, 130, 20)
+            barrier!.backgroundColor = UIColor.grayColor()
+        }
     }
     
     func activateMotion(){
+        print("gameLevel: ", gameLevel)
         if redBlock == nil {
             redBlock = addBlock()
             redBlock?.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05)
             bouncer.addBlock(redBlock!)
         }
+        if gameLevel == 2 {
+            barrier = addBarrior()
+        }
+        
         let motionManager = AppDelegate.Motion.Manager
         if motionManager.accelerometerAvailable {
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue())
@@ -92,26 +129,37 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     
 
     func playSound(){
-        AudioServicesPlaySystemSound(1051)
+//        AudioServicesPlaySystemSound(1051) ************
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint) {
+        var maxCount = 1
         
-        if count < 18 {
+        if gameLevel == 1 {
+            maxCount = 18
+        }else{
+            maxCount = 20
+        }
+        
+        if count < maxCount {
             playSound()
             count++
-//            if redBlock?.backgroundColor == UIColor.redColor(){
-//                redBlock?.backgroundColor = UIColor.greenColor()
-//            }else{
-//                redBlock?.backgroundColor = UIColor.redColor()
-//            }
+
             redBlock?.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.05 * CGFloat(count))
-           redBlock?.frame = CGRectMake((redBlock?.frame.minX)!, (redBlock?.frame.minY)!, (redBlock?.frame.width)! * 1.2, (redBlock?.frame.height)! * 1.2)
+            if gameLevel == 1 {
+                redBlock?.frame = CGRectMake((redBlock?.frame.minX)!, (redBlock?.frame.minY)!, (redBlock?.frame.width)! * 1.2, (redBlock?.frame.height)! * 1.2)
+            }
             
         }else {
-            redBlock!.frame = CGRectMake(0, 0, 0, 0)
+            if gameLevel == 1 {
+                redBlock!.frame = CGRectMake(0, 0, 0, 0)
+                if barrier != nil {
+                        barrier!.frame = CGRectMake(0, 0, 0, 0)
+                }
+            }
             addLabel()
             print("Game Over")
+            AppDelegate.Motion.Manager.stopAccelerometerUpdates()
         }
         print("count", count)
     }

@@ -14,6 +14,9 @@
 		F6C210FB1C4F50F900E3E6DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C210F91C4F50F900E3E6DB /* LaunchScreen.storyboard */; };
 		F6C211031C4F511000E3E6DB /* BouncingBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C211021C4F511000E3E6DB /* BouncingBall.swift */; };
 		F6C211051C4F810500E3E6DB /* BouncingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C211041C4F810500E3E6DB /* BouncingViewController.swift */; };
+		F6C211071C4FF4AB00E3E6DB /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C211061C4FF4AB00E3E6DB /* SettingViewController.swift */; };
+		F6C211091C4FF4E500E3E6DB /* CancelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C211081C4FF4E500E3E6DB /* CancelProtocol.swift */; };
+		F6C2110B1C4FF53500E3E6DB /* DoneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C2110A1C4FF53500E3E6DB /* DoneProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		F6C210FC1C4F50F900E3E6DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6C211021C4F511000E3E6DB /* BouncingBall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncingBall.swift; sourceTree = "<group>"; };
 		F6C211041C4F810500E3E6DB /* BouncingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncingViewController.swift; sourceTree = "<group>"; };
+		F6C211061C4FF4AB00E3E6DB /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		F6C211081C4FF4E500E3E6DB /* CancelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelProtocol.swift; sourceTree = "<group>"; };
+		F6C2110A1C4FF53500E3E6DB /* DoneProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoneProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,9 @@
 				F6C210FC1C4F50F900E3E6DB /* Info.plist */,
 				F6C211021C4F511000E3E6DB /* BouncingBall.swift */,
 				F6C211041C4F810500E3E6DB /* BouncingViewController.swift */,
+				F6C211061C4FF4AB00E3E6DB /* SettingViewController.swift */,
+				F6C211081C4FF4E500E3E6DB /* CancelProtocol.swift */,
+				F6C2110A1C4FF53500E3E6DB /* DoneProtocol.swift */,
 			);
 			path = coreMotionBounce;
 			sourceTree = "<group>";
@@ -142,6 +151,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6C211071C4FF4AB00E3E6DB /* SettingViewController.swift in Sources */,
+				F6C211091C4FF4E500E3E6DB /* CancelProtocol.swift in Sources */,
+				F6C2110B1C4FF53500E3E6DB /* DoneProtocol.swift in Sources */,
 				F6C211031C4F511000E3E6DB /* BouncingBall.swift in Sources */,
 				F6C210F31C4F50F900E3E6DB /* ViewController.swift in Sources */,
 				F6C210F11C4F50F900E3E6DB /* AppDelegate.swift in Sources */,
@@ -295,6 +307,7 @@
 				F6C211011C4F50F900E3E6DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
