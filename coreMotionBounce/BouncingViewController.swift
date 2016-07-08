@@ -19,6 +19,7 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     var gameLevel = 1
     var barrier: UIView?
     var block: UIView?
+    var btxtField: UILabel?
     
     
     func addLabel(){
@@ -39,11 +40,30 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
             }
            
 //            txtField.font = UIFont(name: "System", size: 40)
-            txtField.font = UIFont(name: "System", size: 40.0)
+            txtField.font = UIFont(name: "System", size: 20.0)
 //            txtField.alignmentRectInsets()
             txtField.textAlignment = NSTextAlignment.Center
             txtField.tag = 135
             self.addSubview(txtField)
+        }
+    }
+    
+    func addBalancedText(){
+        if let viewWithTag = self.viewWithTag(235){
+            viewWithTag.hidden = false
+        }else{
+            let bx = ((self.frame.maxX - self.frame.minX)/2.0) - 3.0
+            let by = ((self.frame.maxY-self.frame.minY)/2.0) - 3.0
+            btxtField = UILabel(frame: CGRectMake(bx,by, 100, 30))
+            btxtField!.text = "Balanced!"
+            btxtField!.textColor = UIColor.redColor()
+            btxtField!.backgroundColor = UIColor.whiteColor()
+            btxtField!.font = UIFont(name: "System", size: 10.0)
+            btxtField!.tag = 235
+            self.addSubview(btxtField!)
+            
+           
+           
         }
     }
     
@@ -106,6 +126,7 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     }
     
     func activateMotion(){
+        var wait_count = 0
         print("gameLevel: ", gameLevel)
         if redBlock == nil {
             redBlock = addBlock()
@@ -122,6 +143,24 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
                 { (data, error) -> Void in
                     self.bouncer.gravity.gravityDirection = CGVector(dx: data!.acceleration.x, dy: -data!.acceleration.y)
                     
+                   let min = 0.00000001
+                    let max = 0.005
+                    let curr_x = data!.acceleration.x
+                    let curr_y = data!.acceleration.y
+                    
+                    if min < fabs(curr_x) && fabs(curr_x) < max && min < fabs(curr_y) && fabs(curr_y) < max  {
+                        print("acceleration X, acceleration Y: ", data!.acceleration.x, data!.acceleration.y)
+                        self.addBalancedText()
+                        
+                    }else{
+                        wait_count++
+                        if self.btxtField != nil && wait_count >= 5 {
+                        
+                            self.btxtField?.hidden = true
+                            wait_count = 0
+                        }
+                    }
+                    
                 }
         }
 
@@ -129,7 +168,7 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
     
 
     func playSound(){
-//        AudioServicesPlaySystemSound(1051) ************
+        AudioServicesPlaySystemSound(1051)
     }
     
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint) {
@@ -151,12 +190,12 @@ class BouncingViewController: UIView, UICollisionBehaviorDelegate {
             }
             
         }else {
-            if gameLevel == 1 {
-                redBlock!.frame = CGRectMake(0, 0, 0, 0)
-                if barrier != nil {
-                        barrier!.frame = CGRectMake(0, 0, 0, 0)
-                }
+            
+            redBlock!.frame = CGRectMake(0, 0, 0, 0)
+            if barrier != nil {
+                    barrier!.frame = CGRectMake(0, 0, 0, 0)
             }
+            
             addLabel()
             print("Game Over")
             AppDelegate.Motion.Manager.stopAccelerometerUpdates()
